@@ -7,6 +7,11 @@ export async function GET(request, { params }) {
     where: {
       id: Number(params.id),
     },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+    },
   });
 
   if (!task) return NextResponse.json({ error: 'Tarea no encontrada' }, { status: 404 });
