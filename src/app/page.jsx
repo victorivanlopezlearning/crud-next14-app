@@ -1,9 +1,18 @@
 import Link from 'next/link';
-import { TaskItem } from "@/components";
+import { TasksList } from '@/components';
 
 async function getTasks() {
-  const res = await fetch('http://localhost:3000/api/tasks');
-  return await res.json();
+  try {
+    const res = await fetch('http://localhost:3000/api/tasks', {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error('Hubo un error al obtener las tareas.');
+
+    return res.json();
+  } catch (error) {
+    console.log('Error al cargar las tareas: ', error);
+  }
 }
 
 export default async function HomePage() {
@@ -23,15 +32,11 @@ export default async function HomePage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4 md:mx-8 lg:mx-0">
-        {
-          tasks.length === 0
-            ? <p>No hay tareas aún.</p>
-            : tasks.map(task => (
-              <TaskItem key={task.id} task={task} />
-            ))
-        }
-      </div>
+      {
+        tasks.length === 0
+          ? <p>No hay tareas aún.</p>
+          : <TasksList tasks={tasks} />
+      }
     </div>
   )
 }
