@@ -74,6 +74,26 @@ export const FormTask = ({ task = {} }) => {
     }
   }
 
+  const onDeleteTask = async () => {
+    if (confirm('¿Eliminar la tarea?')) {
+      router.refresh();
+      try {
+        const res = await fetch(`http://localhost:3000/api/tasks/${task.id}`, {
+          method: 'DELETE',
+        });
+
+        if (res.ok) {
+          router.push('/');
+        } else {
+          throw new Error('Error al eliminar la tarea.');
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   return (
     <form
       className="mx-4 md:mx-0 my-20"
@@ -121,6 +141,7 @@ export const FormTask = ({ task = {} }) => {
             <button
               type="button"
               className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition-colors"
+              onClick={onDeleteTask}
             >
               Eliminar
             </button>
