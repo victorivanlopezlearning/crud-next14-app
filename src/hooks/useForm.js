@@ -11,10 +11,15 @@ export const useForm = (initForm = {}) => {
     setFormData(initForm);
   }
 
+  const onUpdateDataForm = (newData) => {
+    setFormData(newData);
+  }
+
   return {
     ...formData,
     formData,
     onInputChange,
     onResetForm,
+    onUpdateDataForm,
   }
 }
