@@ -2,6 +2,7 @@
 
 ## Description
 - Development with Next 14.
+- CRUD.
 - Custom Hooks.
 - Prisma ORM.
 - Tailwind CSS for interface styles.
